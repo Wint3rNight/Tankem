@@ -6,7 +6,7 @@ using Image = UnityEngine.UI.Image;
 public class HealthDisplay : NetworkBehaviour
 {
     [SerializeField] private Health health;
-    [SerializeField] private Image healthBar;
+    [SerializeField] private Image healthBarImage;
 
     public override void OnNetworkSpawn()
     {
@@ -27,9 +27,13 @@ public class HealthDisplay : NetworkBehaviour
         health.currentHealth.OnValueChanged -= HandleHealthChange;
     }
 
-    private void HandleHealthChange(int oldValue, int newValue)
+    private void HandleHealthChange(int oldHealth, int newHealth)
     {
-        healthBar.fillAmount = (float)newValue / health.MaxHealth;
+        if (healthBarImage == null || health == null)
+        {
+            return;
+        }
+        healthBarImage.fillAmount = (float)newHealth / health.MaxHealth;
     }
     
 }

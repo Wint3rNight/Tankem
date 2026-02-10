@@ -1,0 +1,39 @@
+using System;
+using Unity.Netcode;
+using UnityEngine;
+
+public class DealDamage : MonoBehaviour
+{
+    [SerializeField] private int damage = 17;
+
+    private ulong ownerClientID;
+    
+    public void SetOwner(ulong ownerClientID)
+    {
+        this.ownerClientID = ownerClientID;
+    }
+    
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (!NetworkManager.Singleton.IsServer) return;
+        if (col.attachedRigidbody == null)
+        {
+            return;
+        }
+        
+        if (col.attachedRigidbody.TryGetComponent<NetworkObject>(out NetworkObject networkObject))
+        {
+            if (ownerClientID == networkObject.OwnerClientId)
+            {
+                return;
+            }
+        }
+    
+        if (col.attachedRigidbody.TryGetComponent<Health>(out Health health))
+        {
+            health.TakeDamage(damage);
+            Destroy(gameObject);
+        }
+    }
+    
+}

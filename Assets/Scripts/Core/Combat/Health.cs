@@ -23,8 +23,18 @@ public class Health : NetworkBehaviour
 
     public void TakeDamage(int damageValue)
     {
+        if (!IsServer)
+        {
+            return;
+        }
         ModifyHealth(-damageValue);
     }
+    
+    // [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    // private void TakeDamageServerRpc(int damageValue)
+    // {
+    //     ModifyHealth(-damageValue);
+    // }
 
     public void Heal(int healValue)
     {
@@ -40,10 +50,10 @@ public class Health : NetworkBehaviour
         int newHealth = currentHealth.Value + value;
         currentHealth.Value = Mathf.Clamp(newHealth, 0, MaxHealth);
         
-        if (currentHealth.Value <= 0)
+        if (currentHealth.Value == 0)
         {
-            _isDead = true;
             OnDeath?.Invoke(this);
+            _isDead = true;
         }
     }
 }
