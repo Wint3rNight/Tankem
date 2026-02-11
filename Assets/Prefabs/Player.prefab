@@ -154,7 +154,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1115948511
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 200
   m_Sprite: {fileID: 21300000, guid: a94bf141bd2044c4399e321445c83112, type: 3}
   m_Color: {r: 0.3018868, g: 0.20647918, b: 0.20647918, a: 1}
@@ -509,11 +509,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LaunchProjectile
   ShowTopMostFoldoutHeaderGroup: 1
   inputReader: {fileID: 11400000, guid: 571a73b6cce7e33ecae54fb3c8728639, type: 2}
+  wallet: {fileID: -1156476341852456818}
   projectileSpawnPoint: {fileID: 7506289820830757684}
   serverProjectilePrefab: {fileID: 3568386024597605796, guid: 35e0bec84930e3c318366eb951342f99, type: 3}
   clientProjectilePrefab: {fileID: 5138756356142441974, guid: c68d42f1d6be51a4282e5e647b661116, type: 3}
   flashPrefab: {fileID: 8965766307946777789}
   playerCollider: {fileID: 8593415358219187328}
+  costToFire: 5
   projectileSpeed: 15
   fireRate: 1
   flashDuration: 0.08
@@ -546,7 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinWallet
   ShowTopMostFoldoutHeaderGroup: 1
-  TotalCoins:
+  totalCoins:
     m_InternalValue: 0
 --- !u!1 &3797156322414199507
 GameObject:
@@ -659,7 +661,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1115948511
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1a838243856331f4681c559527ad5846, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -841,7 +843,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1115948511
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: 8769e4453ce5bc3429cfba7d58fbef13, type: 3}
   m_Color: {r: 0.7830189, g: 0.09233712, b: 0.09233712, a: 1}
@@ -931,7 +933,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1115948511
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 20
   m_Sprite: {fileID: 21300000, guid: 9d8bd4f8481a773488649b18bd02cbc1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

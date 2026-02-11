@@ -4,19 +4,22 @@ using UnityEngine;
 public class LaunchProjectile : NetworkBehaviour
 {
     [SerializeField] private InputReader inputReader;
+    [SerializeField] private CoinWallet wallet;
     [SerializeField] private Transform projectileSpawnPoint;
     [SerializeField] private GameObject serverProjectilePrefab;
     [SerializeField] private GameObject clientProjectilePrefab;
     [SerializeField] private GameObject flashPrefab;
     [SerializeField] private Collider2D playerCollider;
+    [SerializeField] private int costToFire;
     
     [SerializeField] private float projectileSpeed;
     [SerializeField] private float fireRate;
     [SerializeField] private float flashDuration;
     
     private bool _shouldFire;
-    private float _prevFireTime;
     private float _flashTimer;
+    private float _timer;
+    
     
     
     public override void OnNetworkSpawn()
@@ -53,20 +56,31 @@ public class LaunchProjectile : NetworkBehaviour
             return;
         }
 
+        if (_timer>0)
+        {
+            _timer -= Time.deltaTime;
+        }
+
         if (!_shouldFire)
         {
             return;
         }
 
-        if (Time.time < _prevFireTime+(1f / fireRate))
+        if (_timer>0)
+        {
+            return;
+        }
+        
+        if(wallet.totalCoins.Value<costToFire)
         {
             return;
         }
         
         PrimaryFireServerRpc(projectileSpawnPoint.position, projectileSpawnPoint.up);
+        
         SpawnDummyProjectile(projectileSpawnPoint.position, projectileSpawnPoint.up);
         
-        _prevFireTime = Time.time;
+        _timer = 1 / fireRate;
     }
     
     private void HandlePrimaryFire(bool shouldFire)
@@ -77,6 +91,13 @@ public class LaunchProjectile : NetworkBehaviour
     [ServerRpc]
     private void PrimaryFireServerRpc(Vector3 spawnPos, Vector3 direction)
     {
+        if(wallet.totalCoins.Value<costToFire)
+        {
+            return;
+        }
+        
+        wallet.SpendCoins(costToFire);
+        
         GameObject projectileInstance = Instantiate(serverProjectilePrefab, spawnPos, Quaternion.identity);
         
         projectileInstance.transform.up = direction;
