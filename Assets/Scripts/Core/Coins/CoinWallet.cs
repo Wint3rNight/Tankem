@@ -1,9 +1,10 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CoinWallet : NetworkBehaviour
 {
-    public NetworkVariable<int> TotalCoins = new NetworkVariable<int>();
+    [FormerlySerializedAs("TotalCoins")] public NetworkVariable<int> totalCoins = new NetworkVariable<int>();
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,7 +20,7 @@ public class CoinWallet : NetworkBehaviour
             return;
         }
         
-        TotalCoins.Value += coinValue;
+        totalCoins.Value += coinValue;
     }
 
 }

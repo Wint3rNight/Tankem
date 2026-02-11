@@ -6,11 +6,11 @@ public class DealDamage : MonoBehaviour
 {
     [SerializeField] private int damage = 17;
 
-    private ulong ownerClientID;
+    private ulong _ownerClientID;
     
     public void SetOwner(ulong ownerClientID)
     {
-        this.ownerClientID = ownerClientID;
+        this._ownerClientID = ownerClientID;
     }
     
     private void OnTriggerEnter2D(Collider2D col)
@@ -23,7 +23,7 @@ public class DealDamage : MonoBehaviour
         
         if (col.attachedRigidbody.TryGetComponent<NetworkObject>(out NetworkObject networkObject))
         {
-            if (ownerClientID == networkObject.OwnerClientId)
+            if (_ownerClientID == networkObject.OwnerClientId)
             {
                 return;
             }
