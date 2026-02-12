@@ -53,14 +53,14 @@ public static class AuthenticationWrapper
                     break;
                 }
             }
-            catch (AuthenticationException ex)
+            catch (AuthenticationException authenticationException)
             {
-                Debug.LogError($"Authentication failed: {ex.Message}");
+                Debug.LogError($"Authentication failed: {authenticationException.Message}");
                 AuthenticationState = AuthenticationState.AuthenticationFailed;
             }
-            catch (RequestFailedException exception)
+            catch (RequestFailedException requestFailedException)
             {
-                Debug.LogError($"Request failed: {exception.Message}");
+                Debug.LogError($"Request failed: {requestFailedException.Message}");
                 AuthenticationState = AuthenticationState.AuthenticationFailed;
             }
             
