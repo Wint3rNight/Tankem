@@ -7,7 +7,6 @@ using Unity.Networking.Transport.Relay;
 using UnityEngine;
 using Unity.Services.Relay;
 using UnityEngine.SceneManagement;
-using Unity.Services.Authentication;
 
 public class HostGameManager
 {
@@ -39,19 +38,22 @@ public class HostGameManager
         }
 
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-
-        transport.SetRelayServerData(
+        RelayServerData relayServerData = new RelayServerData(
             _allocation.RelayServer.IpV4,
             (ushort)_allocation.RelayServer.Port,
             _allocation.AllocationIdBytes,
+            _allocation.ConnectionData,
+            _allocation.ConnectionData, 
             _allocation.Key,
-            _allocation.ConnectionData,
-            _allocation.ConnectionData,
-            true
-        );   
-        
+            isSecure:true     
+        );
+
+        transport.SetRelayServerData(relayServerData);
         NetworkManager.Singleton.StartHost();
 
-        NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
+        await Task.Delay(500);
+        if (NetworkManager.Singleton.IsHost) {
+            NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
+        }
     }
 }
